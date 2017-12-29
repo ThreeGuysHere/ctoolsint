@@ -9,7 +9,8 @@ class GammaPipe:
 
 	def __init__(self):
 		# Set some standard test data
-		self._datadir = os.environ['TEST_DATA']
+		# self._datadir = os.environ['TEST_DATA']
+		self._datadir = os.environ['PATH']
 		self.caldb   = 'prod2'
 		self.irf     = 'South_0.5h'
 		print('initialised')
