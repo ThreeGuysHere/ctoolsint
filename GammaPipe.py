@@ -20,31 +20,31 @@ class GammaPipe:
 
 		obs = gammalib.GObservations()
 		
-		#read XML here
+		# read XML here
 		info_dict = read_obs_xml(obsfilename)
 
-		###usage: in_ra = info_dict['in_ra']
+		# usage: in_ra = info_dict['in_ra']
 
 		print(info_dict)
 
-		#From observation:
-		#in_pnttype -> celestial/equatorial or galactic
-		#in_ra
-		#in_dec
-		#in_l
-		#in_b
-		#in_tstart
-		#in_duration
-		#in_obsid
+		# From observation:
+		# in_pnttype -> celestial/equatorial or galactic
+		# in_ra
+		# in_dec
+		# in_l
+		# in_b
+		# in_tstart
+		# in_duration
+		# in_obsid
 
-		#From target:
-		#in_emin
-		#in_emax
+		# From target:
+		# in_emin
+		# in_emax
 
-		#From instrument
-		#in_fov
-		#in_irf
-		#in_caldb
+		# From instrument
+		# in_fov
+		# in_irf
+		# in_caldb
 
 		self.in_ra       =   float(info_dict['in_ra'])
 		self.in_dec      =   float(info_dict['in_dec'])
@@ -67,8 +67,8 @@ class GammaPipe:
 		if in_pnttype == 'equatorial' :
 			pntdir.radec_deg(self.in_ra, self.in_dec)
 
-		#if in_pnttype == 'galactic' :
-		#	pntdir.radec_deg(self.in_l, self.in_b)
+		# if in_pnttype == 'galactic' :
+		# 	pntdir.radec_deg(self.in_l, self.in_b)
 
 		obs1 = obsutils.set_obs(pntdir, self.in_tstart, self.in_duration, 1.0, \
 			self.in_emin, self.in_emax, self.in_fov, \
@@ -76,7 +76,7 @@ class GammaPipe:
 			
 		obs.append(obs1)
 
-		#print(obs1)
+		# print(obs1)
 		return obs
 
 	def run_pipeline(self, obs, enumbins=1, nxpix=200, nypix=200, binsz=0.02, debug=False, seed=0):
@@ -102,12 +102,12 @@ class GammaPipe:
 		sim['seed']    = seed
 		sim.run()
 		
-		#Load events from fits file on memory
-		#sim = ctools.ctobssim(obs)
-		#events = sim.obs()[0].events()
-		#for event in events:
-		#	print(event)
-		#events.load(events_name)
+		# Load events from fits file on memory
+		# sim = ctools.ctobssim(obs)
+		# events = sim.obs()[0].events()
+		# for event in events:
+		# 	print(event)
+		# events.load(events_name)
 
 		print('event list generated ----------------------')
 		print(sim.obs())
@@ -119,18 +119,18 @@ class GammaPipe:
 			container = gammalib.GObservations()
 			container.append(run)
 			
-			#event file in memory or read from fits file on memory
+			# event file in memory or read from fits file on memory
 			bin = ctools.ctbin(container) 
 			
-			#event file on disk
-			#bin = ctools.ctbin() 
-			#bin['inobs']    = events_name
+			# event file on disk
+			# bin = ctools.ctbin()
+			# bin['inobs']    = events_name
 			
 			
-			#make binned map on disk
+			# make binned map on disk
 			bin['outcube']  = cubefile_name
 			
-			#common configs
+			# common configs
 			bin['ebinalg']  = 'LOG'
 			bin['emin']     = self.in_emin
 			bin['emax']     = self.in_emax
@@ -142,10 +142,10 @@ class GammaPipe:
 			bin['usepnt']   = True # Use pointing for map centre
 			bin['proj']     = 'CAR'
 			
-			#make binned map on disk
+			# make binned map on disk
 			bin.execute()
-			#make binned map on memory
-			#bin.run()
+			# make binned map on memory
+			# bin.run()
 
 			# Set observation ID if make binned map on disk
 			bin.obs()[0].id(cubefile_name)
@@ -154,8 +154,8 @@ class GammaPipe:
 			# Append result to observations
 			obs.extend(bin.obs())
 
-		#print(obs)
-		#print(obs[0])
+		# print(obs)
+		# print(obs[0])
 
 		# Select events
 		# select = ctools.ctselect()
