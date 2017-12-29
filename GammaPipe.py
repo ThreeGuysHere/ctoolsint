@@ -24,7 +24,7 @@ class GammaPipe:
 
 		###usage: in_ra = info_dict['in_ra']
 
-		print info_dict
+		print(info_dict)
 
 		#From observation:
 		#in_pnttype -> celestial/equatorial or galactic
