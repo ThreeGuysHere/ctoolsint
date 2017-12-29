@@ -2,3 +2,5 @@
 .DS_Store
 conf.py
 conf.pyc
+__pycache__/
+*.fits
