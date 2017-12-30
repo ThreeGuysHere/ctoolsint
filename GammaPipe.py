@@ -6,6 +6,7 @@ from read_xml import read_obs_xml
 import wrapper
 import uuid
 
+
 class GammaPipe:
 
 	def __init__(self):
@@ -86,7 +87,8 @@ class GammaPipe:
 		"""
 		# Set script parameters
 		events_name = 'events.fits'
-		cubefile_name = str(uuid.uuid4())+".fits"
+		# cubefile_name = str(uuid.uuid4())+".fits"
+		cubefile_name = "cube.fits"
 		selected_events_name = 'selected_events.fits'
 		result_name = 'results.xml'
 
@@ -155,6 +157,8 @@ class GammaPipe:
 			obs.extend(bin.obs())
 
 		coords, xml_path = wrapper.extract_source(cubefile_name)
+		print(coords)
+		print(xml_path)
 
 		# print(obs)
 		# print(obs[0])
