@@ -3,7 +3,14 @@ import gammalib
 import ctools
 import obsutils
 from read_xml import read_obs_xml
-
+import astropy.wcs as a
+import cv2
+import sys
+sys.path.insert(0, '../cta-gamma-ray-analisys/filters')
+print(sys.path)
+import kernelize as k
+import utils
+import centroid_extraction as ce
 
 class GammaPipe:
 
@@ -152,6 +159,26 @@ class GammaPipe:
 
 			# Append result to observations
 			obs.extend(bin.obs())
+
+		img = utils.get_data('cube.fits')
+
+		w = a.WCS("cube.fits")
+		print("self.in_ra={0}".format(self.in_ra))
+		print("self.in_dec={0}".format(self.in_dec))
+		print("all_world2pix={0}".format(w.all_world2pix(self.in_ra, self.in_dec, 1)))
+		print("wcs_world2pix={0}".format(w.wcs_world2pix(self.in_ra, self.in_dec, 1)))
+		# print(w.all_pix2world(100, 100, 0))
+		# print(w.wcs_pix2world(100, 100, 0))
+
+		output = k.gaussian_median(img, 3, 7, 1)
+
+		mask = cv2.threshold(output, 127, 255, cv2.THRESH_BINARY)[1]
+		print(ce.find_weighted_centroid(output, mask))
+		print(ce.find_barycenter(mask))
+
+		img = cv2.applyColorMap(img, cv2.COLORMAP_JET)
+		output = cv2.applyColorMap(output, cv2.COLORMAP_JET)
+		utils.show(Original=img, Result=output)
 
 		# print(obs)
 		# print(obs[0])
