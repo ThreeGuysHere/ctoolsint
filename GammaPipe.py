@@ -4,6 +4,7 @@ import ctools
 import obsutils
 from read_xml import read_obs_xml
 import wrapper
+import uuid
 
 class GammaPipe:
 
@@ -85,7 +86,7 @@ class GammaPipe:
 		"""
 		# Set script parameters
 		events_name = 'events.fits'
-		cubefile_name = 'cube.fits'
+		cubefile_name = str(uuid.uuid4())+".fits"
 		selected_events_name = 'selected_events.fits'
 		result_name = 'results.xml'
 
