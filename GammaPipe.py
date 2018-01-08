@@ -199,8 +199,7 @@ class GammaPipe:
 			print(str(self.obsconf.obs_caldb))
 
 			# 3GH Extractor code
-			coords, xml_path = wrapper.extract_source(cubefile_name)
-			print(coords)
+			xml_path = wrapper.extract_source(cubefile_name)
 			print(xml_path)
 
 			# TODO: eseguire MLE
