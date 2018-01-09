@@ -199,8 +199,8 @@ class GammaPipe:
 			print(str(self.obsconf.obs_caldb))
 
 			# 3GH Extractor code
-			xml_path = wrapper.extract_source(cubefile_name)
-			print(xml_path)
+			self.analysisfilename = wrapper.extract_source(cubefile_name)
+			self.analysisfilename = '../cta-gamma-ray-analysis/detected.xml'
 
 			# TODO: eseguire MLE
 			if self.analysisfilename:
@@ -213,6 +213,6 @@ class GammaPipe:
 				like['caldb'] = str(self.obsconf.obs_caldb)
 				like['irf'] = self.obsconf.obs_irf
 				like.execute()
-
+			wrapper.print_graphs("examples/example2source.xml", "results.xml", "detected.xml")
 		# Return
 		return
