@@ -200,19 +200,19 @@ class GammaPipe:
 
 			# 3GH Extractor code
 			self.analysisfilename = wrapper.extract_source(cubefile_name)
-			self.analysisfilename = '../cta-gamma-ray-analysis/detected.xml'
+
 
 			# TODO: eseguire MLE
 			if self.analysisfilename:
 				print('MLE')
 				# Perform maximum likelihood fitting
 				like = ctools.ctlike(sim.obs())
-				# like['inobs']    = selected_events_name
+				# like['inobs'] = selected_events_name
 				like['inmodel'] = self.analysisfilename
 				like['outmodel'] = result_name
 				like['caldb'] = str(self.obsconf.obs_caldb)
 				like['irf'] = self.obsconf.obs_irf
 				like.execute()
-			wrapper.print_graphs("examples/example2source.xml", "results.xml", "detected.xml")
+			wrapper.print_graphs(self.simfilename, result_name, self.analysisfilename)
 		# Return
 		return
