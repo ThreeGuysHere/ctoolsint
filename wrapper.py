@@ -12,7 +12,8 @@ def extract_source(cubefile_name):
 	return xt.perform_extraction()
 
 def print_graphs(inp, ctl, det):
-	print('=========================\nGraphs')
+	print('=================================')
+	print('Graphs')
 	print("Input_file: {0}\nDetected_file: {1}\nCTLike_file: {2}".format(inp, det, ctl))
 
 	# Open files
