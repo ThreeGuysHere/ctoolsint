@@ -5,6 +5,7 @@ import obsutils
 from Configuration import ObservationConfiguration
 from Configuration import RunConfiguration
 import wrapper
+import cv2
 
 class GammaPipe:
 
@@ -200,7 +201,7 @@ class GammaPipe:
 
 			# 3GH Extractor code
 			self.analysisfilename = wrapper.extract_source(cubefile_name)
-
+			cv2.waitKey(0)
 
 			# TODO: eseguire MLE
 			if self.analysisfilename:
@@ -213,6 +214,9 @@ class GammaPipe:
 				like['caldb'] = str(self.obsconf.obs_caldb)
 				like['irf'] = self.obsconf.obs_irf
 				like.execute()
+
 			wrapper.print_graphs(self.simfilename, result_name, self.analysisfilename)
+			cv2.destroyAllWindows()
+
 		# Return
 		return
