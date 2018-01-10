@@ -81,7 +81,7 @@ def print_graphs(inp, ctl, det):
 	plt.title("Number of spots found")
 	plt.xlabel('files')
 	plt.ylabel("n° detections")
-	plt.yticks(range(0, np.max([len(input_res), len(detection_res)])))
+	plt.yticks(range(0, np.max([len(input_res), len(detection_res)])+1))
 
 	labels = ['input', 'detected']
 	counts = [len(input_res), len(detection_res)]
