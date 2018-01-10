@@ -3,12 +3,12 @@ import gammalib
 import ctools
 import cscripts
 import GammaPipe
-
+import glob
 
 # ============================= #
 # Run binned in-memory pipeline #
 # ============================= #
-def pipeline_binned():
+def pipeline_binned(model):
 	print('Run binned pipeline')
 	"""
 	Run binned pipeline
@@ -24,7 +24,7 @@ def pipeline_binned():
 
 	# Extract script parameters from options
 	obsfilename = options[0]['value']
-	simfilename = options[1]['value']
+	simfilename = model
 	analysisfilename = options[2]['value']
 	runconffilename = options[3]['value']
 	eventfilename = options[4]['value']
@@ -52,5 +52,7 @@ def pipeline_binned():
 # ======================== #
 if __name__ == '__main__':
 
-    # Run binned in-memory pipeline
-    pipeline_binned()
+	# Run binned in-memory pipeline
+	all_xml = glob.glob("examples/batches/1s/*.xml")
+	for model in all_xml:
+		pipeline_binned(model)
