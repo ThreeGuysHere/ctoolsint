@@ -5,6 +5,7 @@ import obsutils
 from Configuration import ObservationConfiguration
 from Configuration import RunConfiguration
 import wrapper
+import cv2
 
 class GammaPipe:
 
@@ -199,21 +200,23 @@ class GammaPipe:
 			print(str(self.obsconf.obs_caldb))
 
 			# 3GH Extractor code
-			coords, xml_path = wrapper.extract_source(cubefile_name)
-			print(coords)
-			print(xml_path)
+			self.analysisfilename = wrapper.extract_source(cubefile_name)
+			cv2.waitKey(0)
 
 			# TODO: eseguire MLE
 			if self.analysisfilename:
 				print('MLE')
 				# Perform maximum likelihood fitting
 				like = ctools.ctlike(sim.obs())
-				# like['inobs']    = selected_events_name
+				# like['inobs'] = selected_events_name
 				like['inmodel'] = self.analysisfilename
 				like['outmodel'] = result_name
 				like['caldb'] = str(self.obsconf.obs_caldb)
 				like['irf'] = self.obsconf.obs_irf
 				like.execute()
+
+			wrapper.print_graphs(self.simfilename, result_name, self.analysisfilename)
+			cv2.destroyAllWindows()
 
 		# Return
 		return
