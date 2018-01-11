@@ -8,7 +8,7 @@ import glob
 # ============================= #
 # Run binned in-memory pipeline #
 # ============================= #
-def pipeline_binned(model):
+def pipeline_binned():
 	print('Run binned pipeline')
 	"""
 	Run binned pipeline
@@ -24,7 +24,8 @@ def pipeline_binned(model):
 
 	# Extract script parameters from options
 	obsfilename = options[0]['value']
-	simfilename = model
+	# simfilename = model
+	simfilename = options[1]['value']
 	analysisfilename = options[2]['value']
 	runconffilename = options[3]['value']
 	eventfilename = options[4]['value']
@@ -53,6 +54,8 @@ def pipeline_binned(model):
 if __name__ == '__main__':
 
 	# Run binned in-memory pipeline
-	all_xml = glob.glob("examples/batches/1s/*.xml")
-	for model in all_xml:
-		pipeline_binned(model)
+	# all_xml = glob.glob("examples/batches/1s/*.xml")
+	# for model in all_xml:
+	# 	pipeline_binned(model)
+
+	pipeline_binned()
