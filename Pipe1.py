@@ -24,7 +24,6 @@ def pipeline_binned():
 
 	# Extract script parameters from options
 	obsfilename = options[0]['value']
-	# simfilename = model
 	simfilename = options[1]['value']
 	analysisfilename = options[2]['value']
 	runconffilename = options[3]['value']
@@ -52,10 +51,5 @@ def pipeline_binned():
 # Main routine entry point #
 # ======================== #
 if __name__ == '__main__':
-
-	# Run binned in-memory pipeline
-	# all_xml = glob.glob("examples/batches/1s/*.xml")
-	# for model in all_xml:
-	# 	pipeline_binned(model)
 
 	pipeline_binned()
