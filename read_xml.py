@@ -17,7 +17,7 @@ def read_obs_xml(filename):
     info_dic[root.tag] = {}
 
     for key in root.attrib:
-        value =  root.attrib[key]
+        value = root.attrib[key]
         info_dic[root.tag][key] = value
 
     for child in root:

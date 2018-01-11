@@ -76,7 +76,7 @@ class GammaPipe:
 	# 4.B) hypothesis generation (with spotfinders OR with the analysisfilename)
 	# 4.C) if you have an hypothesis, perform MLE
 
-	def run_pipeline(self, debug=False, seed=0):
+	def run_pipeline(self, debug=False, seed=0, outname="detected.xml"):
 		"""
 		Test unbinned pipeline with FITS file saving
 		"""
@@ -200,7 +200,7 @@ class GammaPipe:
 			print(str(self.obsconf.obs_caldb))
 
 			# 3GH Extractor code
-			self.analysisfilename = wrapper.extract_source(cubefile_name)
+			self.analysisfilename = wrapper.extract_source(cubefile_name, outname)
 			cv2.waitKey(0)
 
 			# TODO: eseguire MLE

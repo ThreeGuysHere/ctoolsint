@@ -38,8 +38,8 @@ def euclidean_distance(x, y):
 	return np.sqrt(np.sum(np.square(np.subtract(x, y))))
 
 
-def extract_source(cubefile_name):
-	xt = Extractor.Extractor(cubefile_name, relative_path+'/')
+def extract_source(cubefile_name, outname):
+	xt = Extractor.Extractor(cubefile_name, relative_path+'/', outname=outname)
 	return xt.perform_extraction()
 
 
@@ -121,7 +121,7 @@ def print_graphs(inp, ctl, det):
 		plt.text(x_coord, y_coord, match[0][0])
 
 	# # Display
-	plt.show()
+	# plt.show()
 
 	return
 

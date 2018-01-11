@@ -8,7 +8,7 @@ import glob
 # ============================= #
 # Run binned in-memory pipeline #
 # ============================= #
-def pipeline_binned(model):
+def pipeline_binned(model, outname):
 	print('Run binned pipeline')
 	"""
 	Run binned pipeline
@@ -41,7 +41,7 @@ def pipeline_binned(model):
 	gp.init(obsfilename, simfilename, analysisfilename, runconffilename, eventfilename)
 
 	# Run analysis pipeline
-	gp.run_pipeline(seed=in_seed)
+	matches = gp.run_pipeline(seed=in_seed, outname=outname)
 
 	# Return
 	return
@@ -53,6 +53,14 @@ def pipeline_binned(model):
 if __name__ == '__main__':
 
 	# Run binned in-memory pipeline
-	all_xml = glob.glob("examples/batches/1s/*.xml")
+	matches = []
+	all_xml = ["examples/batches/1s/a.xml", "examples/batches/1s/b.xml", "examples/batches/1s/c.xml",
+			   "examples/batches/1s/d.xml", "examples/batches/2s/a.xml", "examples/batches/2s/b.xml",
+			   "examples/batches/2s/c.xml", "examples/batches/2s/d.xml", "examples/batches/3s/a.xml",
+			   "examples/batches/3s/b.xml", "examples/batches/3s/c.xml", "examples/batches/3s/d.xml"]
+	i = 1
 	for model in all_xml:
-		pipeline_binned(model)
+		pipeline_binned(model, "out/out"+str(i)+".xml")
+		i += 1
+
+	print(matches)
