@@ -1,4 +1,6 @@
 import matplotlib.pyplot as plt
+import matplotlib.mlab as mlab
+from scipy.stats import norm
 import numpy as np
 import xml.etree.ElementTree as ET
 import sys
@@ -69,7 +71,7 @@ def plots(input_res, detection_res, matches):
 	# plt.ylim(21, 23)
 
 	for match in matches:
-		plt.plot(match[1][1], match[1][2], 'r+')  # input
+		plt.plot(match[1][1], match[1][2], 'r.')  # input
 		plt.plot(match[0][1], match[0][2], 'g^')  # detected
 
 	# # Plot 3: euclidean distance
@@ -90,6 +92,28 @@ def plots(input_res, detection_res, matches):
 		y_coord = match[0][2] - match[1][2]
 		plt.plot(x_coord, y_coord, 'r+')
 		plt.text(x_coord, y_coord, match[0][0])
+
+	# # Plot 4: binned histogram with fitting gaussian
+	plt.figure(4)
+
+	distances = []
+	for match in matches:
+		dist = euclidean_distance([match[0][1], match[0][2]], [match[1][1], match[1][2]])
+		distances.append(dist)
+
+	hist_bins = np.arange(-0.05, 0.06, 0.01)
+	gauss_bins = np.arange(-0.05, 0.06, 0.001)
+
+	(mu, sigma) = norm.fit(distances)
+	y = mlab.normpdf(gauss_bins, mu, sigma)
+
+	plt.plot(np.arange(-0.05, 0.06, 0.001), y, 'r--', linewidth=2)
+	plt.hist(distances, bins=hist_bins, normed=1, facecolor='green', alpha=0.75)
+
+	plt.xlabel('Bins')
+	plt.ylabel('Counts')
+	plt.title(r'$\mathrm{Fitting\ gaussian:}\ \mu=%.3f,\ \sigma=%.3f$' % (mu, sigma))
+	plt.grid(True)
 
 	# # Display
 	plt.show()
