@@ -52,7 +52,7 @@ for i in range(1, 13):
 	input_res = parse_xml(inp)
 	#print(input_res)
 
-	det = "out/out"+str(i)+".xml"
+	det = "ctlike/result"+str(i)+".xml"
 	#print("Detected_file: {0}".format(det))
 	detection_res = parse_xml(det)
 	#print(detection_res)
@@ -72,7 +72,7 @@ fig.canvas.set_window_title('Graphs')
 fig.suptitle("Gamma-ray analysis")
 
 # # Plot 1: number of spots found
-plt.subplot(131)
+plt.figure(1)
 
 plt.title("Number of spots found")
 plt.xlabel('files')
@@ -85,7 +85,7 @@ plt.bar(labels, counts, color=['r', 'g'])
 
 #################################
 # # Plot 2: Detections
-plt.subplot(132)
+plt.figure(2)
 
 plt.title("Matches")
 plt.xlabel('RA')
@@ -104,7 +104,7 @@ for images in matches:
 
 ##########################################
 # # Plot 3: euclidean distance
-plt.subplot(133)
+plt.figure(3)
 
 plt.title("Euclidean distance")
 plt.xlabel('RA')
