@@ -1,8 +1,8 @@
 import matplotlib.pyplot as plt
 import numpy as np
 import xml.etree.ElementTree as ET
-import sys
-
+import matplotlib.mlab as mlab
+from scipy.stats import norm
 
 def match_sources(input, other):
 	listlist = []
@@ -123,5 +123,29 @@ for images in matches:
 		plt.plot(x_coord, y_coord, 'r+')
 		#plt.text(x_coord, y_coord, match[0][0])
 ###############################################
+# # Plot 4: binned histogram with fitting gaussian
+plt.figure(4)
+
+distances = []
+for images in matches:
+	for match in images:
+		dist = euclidean_distance([match[0][1], match[0][2]], [match[1][1], match[1][2]])
+		distances.append(dist)
+
+hist_bins = np.arange(-0.05, 0.06, 0.01)
+gauss_bins = np.arange(-0.05, 0.06, 0.001)
+
+(mu, sigma) = norm.fit(distances)
+y = mlab.normpdf(gauss_bins, mu, sigma)
+
+plt.plot(np.arange(-0.05, 0.06, 0.001), y, 'r--', linewidth=2)
+plt.hist(distances, bins=hist_bins, normed=1, facecolor='green', alpha=0.75)
+
+plt.xlabel('Bins')
+plt.ylabel('Counts')
+plt.title(r'$\mathrm{Fitting\ gaussian:}\ \mu=%.3f,\ \sigma=%.3f$' % (mu, sigma))
+plt.grid(True)
+
+##############################################
 # # Display
 plt.show()
