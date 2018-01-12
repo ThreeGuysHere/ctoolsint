@@ -52,7 +52,7 @@ for i in range(1, 13):
 	input_res = parse_xml(inp)
 	#print(input_res)
 
-	det = "ctlike/result"+str(i)+".xml"
+	det = "lori/out"+str(i)+".xml"
 	#print("Detected_file: {0}".format(det))
 	detection_res = parse_xml(det)
 	#print(detection_res)
