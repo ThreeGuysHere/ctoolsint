@@ -43,52 +43,23 @@ def extract_source(cubefile_name):
 	return xt.perform_extraction()
 
 
-def print_graphs(inp, ctl, det):
-	print('=================================')
-	print('Graphs')
-
-	# Parse files
-	print("Input_file: {0}".format(inp))
-	input_res = parse_xml(inp)
-	print(input_res)
-
-	print("Detected_file: {0}".format(det))
-	detection_res = parse_xml(det)
-	print(detection_res)
-
-	# print("CTLike_file: {0}".format(ctl))
-	# ctlike_res = parse_xml(ctl)
-	# print(ctlike_res)
-
-	# Find matches
-	# # Input vs Detected
-	print("Matches: input vs detected")
-	matches = match_sources(input_res, detection_res)
-	print(matches)
-
-	# # # Input vs CTLike
-	# matches2 = match_sources(input_res, ctlike_res)
-	# print(matches2)
-
-	# Plot graphs
-	fig = plt.figure(num=1, figsize=(20, 5))
-	fig.canvas.set_window_title('Graphs')
-	fig.suptitle("Gamma-ray analysis")
+def plots(input_res, detection_res, matches):
+	# Plot graph
 
 	# # Plot 1: number of spots found
-	plt.subplot(131)
+	plt.figure(1)
 
 	plt.title("Number of spots found")
 	plt.xlabel('files')
 	plt.ylabel("n° detections")
-	plt.yticks(range(0, np.max([len(input_res), len(detection_res)])+1))
+	plt.yticks(range(0, np.max([len(input_res), len(detection_res)]) + 1))
 
 	labels = ['input', 'detected']
 	counts = [len(input_res), len(detection_res)]
 	plt.bar(labels, counts, color=['r', 'g'])
 
 	# # Plot 2: Detections
-	plt.subplot(132)
+	plt.figure(2)
 
 	plt.title("Matches")
 	plt.xlabel('RA')
@@ -102,7 +73,7 @@ def print_graphs(inp, ctl, det):
 		plt.plot(match[0][1], match[0][2], 'g^')  # detected
 
 	# # Plot 3: euclidean distance
-	plt.subplot(133)
+	plt.figure(3)
 
 	plt.title("Euclidean distance")
 	plt.xlabel('RA')
@@ -123,5 +94,36 @@ def print_graphs(inp, ctl, det):
 	# # Display
 	plt.show()
 
+
+def print_graphs(inp, ctl, det):
+	print('=================================')
+	print('Graphs')
+
+	# Parse files
+	print("Input_file: {0}".format(inp))
+	input_res = parse_xml(inp)
+	print(input_res)
+
+	print("Detected_file: {0}".format(det))
+	detection_res = parse_xml(det)
+	print(detection_res)
+
+	print("CTLike_file: {0}".format(ctl))
+	ctlike_res = parse_xml(ctl)
+	print(ctlike_res)
+
+	# Find matches
+	# # Input vs Detected
+	print("Matches: input vs detected")
+	matches = match_sources(input_res, detection_res)
+	print(matches)
+
+	# # # Input vs CTLike
+	print("Matches: input vs ctlike")
+	matches_ctl = match_sources(input_res, ctlike_res)
+	print(matches_ctl)
+
+	plots(input_res, detection_res, matches)
+	plots(input_res, ctlike_res, matches_ctl)
 	return
 

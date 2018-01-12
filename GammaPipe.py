@@ -207,8 +207,8 @@ class GammaPipe:
 			if self.analysisfilename:
 				print('MLE')
 				# Perform maximum likelihood fitting
-				like = ctools.ctlike(sim.obs())
-				# like['inobs'] = selected_events_name
+				like = ctools.ctlike()
+				like['inobs'] = events_name
 				like['inmodel'] = self.analysisfilename
 				like['outmodel'] = result_name
 				like['caldb'] = str(self.obsconf.obs_caldb)
