@@ -76,7 +76,7 @@ class GammaPipe:
 	# 4.B) hypothesis generation (with spotfinders OR with the analysisfilename)
 	# 4.C) if you have an hypothesis, perform MLE
 
-	def run_pipeline(self, debug=False, seed=0, outname="detected.xml", eventsname="result.xml"):
+	def run_pipeline(self, debug=False, seed=0, outname="detected.xml", resname="result.xml"):
 		"""
 		Test unbinned pipeline with FITS file saving
 		"""
@@ -204,18 +204,18 @@ class GammaPipe:
 			cv2.waitKey(0)
 
 			# TODO: eseguire MLE
-			if self.analysisfilename:
-				print('MLE')
-				# Perform maximum likelihood fitting
-				like = ctools.ctlike()
-				like['inobs'] = "events.fits"
-				like['inmodel'] = self.analysisfilename
-				like['outmodel'] = eventsname
-				like['caldb'] = str(self.obsconf.obs_caldb)
-				like['irf'] = self.obsconf.obs_irf
-				like.execute()
-
-			wrapper.print_graphs(self.simfilename, result_name, self.analysisfilename)
+			# if self.analysisfilename:
+			# 	print('MLE')
+			# 	# Perform maximum likelihood fitting
+			# 	like = ctools.ctlike()
+			# 	like['inobs'] = "events.fits"
+			# 	like['inmodel'] = self.analysisfilename
+			# 	like['outmodel'] = resname
+			# 	like['caldb'] = str(self.obsconf.obs_caldb)
+			# 	like['irf'] = self.obsconf.obs_irf
+			# 	like.execute()
+			#
+			# wrapper.print_graphs(self.simfilename, result_name, self.analysisfilename)
 			cv2.destroyAllWindows()
 
 		# Return
