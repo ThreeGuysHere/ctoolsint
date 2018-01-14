@@ -142,7 +142,7 @@ plt.plot(np.arange(-0.05, 0.06, 0.001), y, 'r--', linewidth=2)
 plt.hist(distances, bins=hist_bins, normed=1, facecolor='green', alpha=0.75)
 
 plt.xlabel('Bins')
-plt.ylabel('Counts')
+plt.ylabel('Hist. probabilities')
 plt.title(r'$\mathrm{Fitting\ gaussian:}\ \mu=%.3f,\ \sigma=%.3f$' % (mu, sigma))
 plt.grid(True)
 
