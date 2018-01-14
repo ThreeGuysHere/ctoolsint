@@ -3,6 +3,8 @@ import numpy as np
 import xml.etree.ElementTree as ET
 import matplotlib.mlab as mlab
 from scipy.stats import norm
+from astropy.coordinates import SkyCoord
+
 
 def match_sources(input, other):
 	listlist = []
@@ -18,7 +20,17 @@ def match_sources(input, other):
 
 
 def euclidean_distance(x, y):
-	return np.sqrt(np.sum(np.square(np.subtract(x, y))))
+	d = np.sqrt(np.sum(np.square(np.subtract(x, y))))
+	#print('eucl: ', d)
+	return d
+
+
+def circle_distance(x, y):
+	c1 = SkyCoord(x[0], x[1], frame='icrs', unit="deg")
+	c2 = SkyCoord(y[0], y[1], frame='icrs', unit="deg")
+	sep = c1.separation(c2)
+	#print('circle: ', sep.deg)
+	return sep.deg
 
 
 def parse_xml(filename):
@@ -129,12 +141,14 @@ plt.figure(4)
 distances = []
 for images in matches:
 	for match in images:
-		dist = euclidean_distance([match[0][1], match[0][2]], [match[1][1], match[1][2]])
+		dist = circle_distance([match[0][1], match[0][2]], [match[1][1], match[1][2]])
 		distances.append(dist)
 
 hist_bins = np.arange(-0.05, 0.06, 0.01)
+hist_bins[5] = 0.0
 gauss_bins = np.arange(-0.05, 0.06, 0.001)
 
+print(hist_bins)
 (mu, sigma) = norm.fit(distances)
 y = mlab.normpdf(gauss_bins, mu, sigma)
 

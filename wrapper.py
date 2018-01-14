@@ -3,6 +3,7 @@ import matplotlib.mlab as mlab
 from scipy.stats import norm
 import numpy as np
 import xml.etree.ElementTree as ET
+from astropy.coordinates import SkyCoord
 import sys
 relative_path = '../cta-gamma-ray-analysis'
 sys.path.insert(0, relative_path)
@@ -38,6 +39,13 @@ def match_sources(input, other):
 
 def euclidean_distance(x, y):
 	return np.sqrt(np.sum(np.square(np.subtract(x, y))))
+
+
+def circle_distance(x, y):
+	c1 = SkyCoord(x[0], x[1], frame='icrs', unit="deg")
+	c2 = SkyCoord(y[0], y[1], frame='icrs', unit="deg")
+	sep = c1.separation(c2)
+	return sep.deg
 
 
 def extract_source(cubefile_name):
@@ -98,7 +106,7 @@ def plots(input_res, detection_res, matches):
 
 	distances = []
 	for match in matches:
-		dist = euclidean_distance([match[0][1], match[0][2]], [match[1][1], match[1][2]])
+		dist = circle_distance([match[0][1], match[0][2]], [match[1][1], match[1][2]])
 		distances.append(dist)
 
 	hist_bins = np.arange(-0.05, 0.06, 0.01)
